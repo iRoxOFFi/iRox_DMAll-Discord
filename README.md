@@ -38,6 +38,14 @@ Une fois l'installation terminée, démarrez simplement :
 node server.js
 ```
 
+Le terminal devrait alors afficher :
+
+```bash
+🚀 Serveur web démarré sur http://localhost:PORT/
+```
+
+Ainsi que l’état de connexion du bot Discord.
+
 ---
 
 ## 📁 Structure du projet
