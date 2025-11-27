@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panneau de Contrôle Bot Discord</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fa-brands fa-discord"></i> Panneau DM ALL</h1>
+            <p>Credits : IROX²</p>
+        </header>
+
+        <main>
+            <div class="form-group">
+                <label for="botToken"><i class="fa-solid fa-key"></i> Token du Bot</label>
+                <div class="password-container">
+                    <input type="password" id="botToken" placeholder="Collez le token de votre bot ici">
+                    <i class="fa-solid fa-eye" id="togglePassword"></i>
+                </div>
+                <small class="warning-text"><i class="fa-solid fa-triangle-exclamation"></i> Ne jamais partager cette page si le token est visible.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="guildId"><i class="fa-solid fa-server"></i> ID du Serveur Discord</label>
+                <input type="text" id="guildId" placeholder="Collez l'ID de votre serveur ici">
+            </div>
+
+            <div class="form-group">
+                <label for="message"><i class="fa-solid fa-comment-dots"></i> Votre Message</label>
+                <textarea id="message" rows="8" placeholder="Écrivez votre message ici..."></textarea>
+            </div>
+
+            <button id="executeBtn">
+                <i class="fa-solid fa-paper-plane"></i> Exécuter l'envoi
+            </button>
+        </main>
+
+        <footer>
+            <div id="status"></div>
+        </footer>
+    </div>
+
+    <script>
+        const executeBtn = document.getElementById('executeBtn');
+        const botTokenInput = document.getElementById('botToken');
+        const guildIdInput = document.getElementById('guildId');
+        const messageInput = document.getElementById('message');
+        const statusDiv = document.getElementById('status');
+        const togglePassword = document.getElementById('togglePassword');
+
+        togglePassword.addEventListener('click', () => {
+            // Change le type de l'input de password à text et vice-versa
+            const type = botTokenInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            botTokenInput.setAttribute('type', type);
+
+            // Change l'icône de l'œil
+            if (type === 'password') {
+                togglePassword.classList.remove('fa-eye-slash');
+                togglePassword.classList.add('fa-eye');
+            } else {
+                togglePassword.classList.remove('fa-eye');
+                togglePassword.classList.add('fa-eye-slash');
+            }
+        });
+
+        executeBtn.addEventListener('click', async () => {
+            const token = botTokenInput.value.trim();
+            const guildId = guildIdInput.value.trim();
+            const message = messageInput.value.trim();
+
+            if (!token || !guildId || !message) {
+                statusDiv.innerHTML = `<p class="error"><i class="fa-solid fa-circle-exclamation"></i> Veuillez remplir le token, l'ID du serveur et le message.</p>`;
+                return;
+            }
+
+            executeBtn.disabled = true;
+            executeBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Envoi en cours...';
+            statusDiv.innerHTML = `<p class="info"><i class="fa-solid fa-hourglass-start"></i> L'opération a commencé. Soyez patient...</p>`;
+
+            try {
+                const response = await fetch('/api/dm-all', { // On appelle notre propre serveur
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ token, guildId, message }),
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    statusDiv.innerHTML = `
+                        <p class="success">
+                            <i class="fa-solid fa-check-circle"></i> Opération terminée !<br>
+                            Messages envoyés avec succès : <strong>${result.successCount}</strong><br>
+                            Échecs (DMs bloqués) : <strong>${result.errorCount}</strong>
+                        </p>`;
+                } else {
+                    throw new Error(result.message);
+                }
+
+            } catch (error) {
+                statusDiv.innerHTML = `<p class="error"><i class="fa-solid fa-circle-exclamation"></i> Erreur : ${error.message}</p>`;
+            } finally {
+                executeBtn.disabled = false;
+                executeBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Exécuter l\'envoi';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+:root {
+    --bg-color: #2c2f33;
+    --primary-color: #7289da;
+    --secondary-color: #23272a;
+    --text-color: #ffffff;
+    --error-color: #f04747;
+    --success-color: #43b581;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: var(--secondary-color);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #40444b;
+    padding-bottom: 1rem;
+}
+
+header h1 {
+    color: var(--primary-color);
+    margin: 0;
+}
+
+header h1 .fa-discord {
+    margin-right: 10px;
+}
+
+header p {
+    color: #99aab5;
+    margin-top: 0.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.form-group label .fa-solid {
+    margin-right: 8px;
+    color: var(--primary-color);
+    width: 20px;
+    text-align: center;
+}
+
+.password-container {
+    position: relative;
+}
+
+/* On ajoute un padding à droite pour ne pas que le texte passe sous l'icône */
+.password-container input {
+    padding-right: 45px !important;
+}
+
+.password-container .fa-solid {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #99aab5;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #40444b;
+    border-radius: 5px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Cache l'icône "œil" par défaut des navigateurs (Edge, Chrome, etc.) */
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+button:hover:not(:disabled) {
+    background-color: #677bc4;
+}
+
+button:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+button:disabled {
+    background-color: #505d99;
+    cursor: not-allowed;
+}
+
+footer {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+#status p {
+    padding: 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    margin: 0;
+    line-height: 1.5;
+}
+
+#status .error {
+    background-color: rgba(240, 71, 71, 0.2);
+    color: var(--error-color);
+    border: 1px solid var(--error-color);
+}
+
+#status .success {
+    background-color: rgba(67, 181, 129, 0.2);
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+}
+
+#status .info {
+    background-color: rgba(114, 137, 218, 0.2);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.warning-text {
+    color: var(--error-color);
+    display: block;
+    margin-top: 5px;
+}
