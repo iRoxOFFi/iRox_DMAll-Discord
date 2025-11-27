@@ -27,7 +27,7 @@ Assurez-vous que **Node.js** est installé sur votre machine.
 Ensuite, exécutez :
 
 ```bash
-npm install
+npm install discord.js
 ```
 
 ### 3️⃣ **Lancer le bot**
