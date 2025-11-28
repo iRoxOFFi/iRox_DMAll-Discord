@@ -24,10 +24,16 @@ cd iRox_DMAll-Discord
 
 Assurez-vous que **Node.js** est installé sur votre machine.
 
+Initialisé le package **Node.js**, exécutez :
+
+```bash
+npm init -y
+```
+
 Ensuite, exécutez :
 
 ```bash
-npm install discord.js
+npm install express cors discord.js
 ```
 
 ### 3️⃣ **Lancer le bot**
